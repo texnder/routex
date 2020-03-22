@@ -16,6 +16,9 @@ Routex provides full freedom to define custom Urls for each pages of application
 	
 	syntax:
 		use Routex\Route;
+
+		// for get requests
+
 		Route::get('my-custom-url/{key}/$_GET-key-in-curly-braces/{id}', 'controller@method');
 
 		or
@@ -27,6 +30,24 @@ Routex provides full freedom to define custom Urls for each pages of application
 		or
 
 		Route::get('my-custom-url/{key}/$_GET-key-in-curly-braces/{id}', function(){
+				// valid codes..
+				return "hello world";
+		});
+
+		// for post request
+
+		Route::post('my-custom-url', 'controller@method');
+
+		or
+
+		Route::post('my-custom-url', function(){
+				return view('ViewName(without extension and use [.] for directory separation)');
+		});
+
+		or 
+
+		Route::post('my-custom-url', function(){
+				// valid codes..
 				return "hello world";
 		});
 
