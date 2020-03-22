@@ -17,6 +17,11 @@
 
     "minimum-stability": "stable",
     "autoload": {
+        "files" : [
+            "helpers.php",
+            "Route.php"
+        ],
+
         "psr-4": {
             "Routex\\": ""
         }
