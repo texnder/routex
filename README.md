@@ -7,6 +7,8 @@ install this library using composer.
 	syntax:
 		composer require texnder/routex
 
+## Routex Response
+To get client response data create [Routex\http\Response class] new instance and call its getResponse method. Routex\http\Response has a [Routex\http\Request class] dependency. so inject it by creating this instance or simply create [Routex\http\Response class] using aditex dependency injector. Routex is dependent on aditex, it means it will install automatically, when you install Routex using composer.
 
 ## Clean Url
 using routex library you can write clean urls for application pages. It's easy and fast in use. It provides professional look to your website and also helps you indexing high in google search. clean url very much helps in digital marketing and search engine optimisation(SEO).
