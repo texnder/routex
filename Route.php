@@ -4,6 +4,8 @@ namespace Routex;
 use Routex\Exception\RouteException;
 use Routex\method\get;
 use Routex\method\post;
+use Aditex\src\Container;
+use Routex\http\Response;
 
 
 class Route
@@ -29,6 +31,7 @@ class Route
 	{
 		define('APP_VIEW', $viewPath);
 		define('VIEW_FILE_EXT', $extension);
+		$this->sendClientResponse();
 	}
 	/**
 	 * set get request urls and corressponding view for them
@@ -41,6 +44,17 @@ class Route
 		array_push(self::$authGetRequests, new get($url,$view));
 	}
 
+
+	/**
+	 * new aditex container
+	 *
+	 * @return object 
+	 */
+	public function container()
+	{
+		return new Container();
+	}
+	
 	/**
 	 * set post request urls and corressponding view for them
 	 * 
@@ -65,4 +79,18 @@ class Route
 			return self::$authPostRequests;
 		}
 	}
+
+	/**
+	 * send response data for client request
+	 *
+	 * @return client response
+	 */
+	public function sendClientResponse()
+	{
+		return $this->container()
+				->create(Response::class)->get()
+				->getResponse();
+	}
+
+
 }
