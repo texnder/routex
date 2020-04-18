@@ -31,11 +31,11 @@ class Response
 	/**
 	 * include file if exist.
 	 */
-	private function returnView()
+	private function returnView($data)
 	{
 
-		if (is_array($this->httpRequest->data)) {
-			 extract($this->httpRequest->data);
+		if (is_array($data)) {
+			 extract($data);
 		}
 
 		require_once $this->viewPath;
@@ -81,7 +81,7 @@ class Response
 		if (is_string($this->httpRequest->view)) {
 			
 			if ($this->checkViewFileExist(APP_VIEW,$this->httpRequest->view)) {
-				return $this->returnView();
+				return $this->returnView($this->httpRequest->data);
 			}else{
 				
 				throw new httpResponseException("View {$this->httpRequest->view} not exist!!");
@@ -91,19 +91,56 @@ class Response
 		elseif (is_string($this->httpRequest->controller) && is_string($this->httpRequest->method)) {
 			$data = $this->callController($this->httpRequest->controller,$this->httpRequest->method);
 			if (is_object($data)) {
+
+				if ($this->redirectInstance($data)) {
+					return $this->setLocHeader($data->cleanUrl);
+				}
+				
 				$view = property_exists($data, "path") ? $data->path : null;
+				$viewData = property_exists($data, "data") ? $data->data : null;
+
 				if ($this->checkViewFileExist(APP_VIEW,$view)) {
-					return $this->returnView();
+
+					return $this->returnView($viewData);
+
 				}else{
+
 					return print_r($data);
+
 				}
 			}else{
 				return print_r($data);
 			}
 		}else{
+
+			if ($this->redirectInstance($this->httpRequest->callback)) {
+				return $this->setLocHeader($this->httpRequest->callback->cleanUrl);
+			}
+
 			return print_r($this->httpRequest->callback);
 		}
 	}
 
+	/**
+	 * check for redirect instance
+	 *
+	 * @param 	mixed 	$data
+	 */
+	private function redirectInstance($data)
+	{
+		if ($data instanceof Redirect) {
+			return true;
+		}
+	}
 
+	/**
+	 * set location header and redirect it
+	 *
+	 * @param 	string 	$uri
+	 * @return 	header
+	 */
+	private function setLocHeader($uri)
+	{
+		return header("Location: ". url($uri));
+	}
 }

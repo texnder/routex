@@ -2,6 +2,8 @@
 namespace Routex\method;
 
 use Routex\Exception\RouteException;
+use Aditex\src\Container;
+use Routex\http\Redirect;
 
 trait parserTrait{
 
@@ -69,7 +71,7 @@ trait parserTrait{
 	private function getViewRoute($view)
 	{
 		if (is_object($view)) {
-			return $view();
+			return $view(Container::$storedServices);
 		}elseif (is_string($view)) {
 			$this->setControllerRoute($view);
 		}else{
@@ -179,6 +181,11 @@ trait parserTrait{
 		$viewRoute = $this->getViewRoute($view);
 
 		if (is_object($viewRoute)) {
+
+			if ($viewRoute instanceof Redirect) {
+				Redirect::$redirectContainer[$this->url] = $viewRoute;
+			}
+			
 			 $this->setView($viewRoute);
 		}
 
