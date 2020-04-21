@@ -2,8 +2,8 @@
 namespace Routex\http;
 
 use Routex\http\Request;
-use aditex\src\Container;
-use routex\Exception\httpResponseException;
+use Aditex\src\Container;
+use Routex\Exception\httpResponseException;
 
 
 class Response
@@ -52,7 +52,7 @@ class Response
 	 */
 	private function checkViewFileExist($dirname,$viewPath)
 	{	
-		$this->viewPath = trim($dirname,"/")."/".trim($viewPath,"/").VIEW_FILE_EXT;
+		$this->viewPath = rtrim($dirname,"/")."/".trim($viewPath,"/").VIEW_FILE_EXT;
 		return file_exists($this->viewPath);
 	}
 
