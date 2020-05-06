@@ -95,9 +95,12 @@ class Request
 	public function hasQuery(string $request_uri)
 	{
 		$uri = parse_url($request_uri);
+
+		$path = $this->isHome($uri);
 		
-		return isset($uri['query']) ? $uri['path'] : false;
+		return isset($uri['query']) ? $path : false;
 	}
+
 
 	/**
 	 * search in authenticated urls..
@@ -280,6 +283,18 @@ class Request
 		return preg_match("/".$url."/", $this->requestUri);
 	}
 
+
+	/**
+	 * check if uri is home
+	 *
+	 * @param 	array 		$parse_url
+	 * @return 	string 		
+	 */
+	private function isHome($parse_url)
+	{
+		return isset($parse_url['path']) ? $parse_url['path'] : "/";
+	}
+	
 
 	/**
 	 * validate requested Url..
