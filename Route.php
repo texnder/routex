@@ -8,18 +8,27 @@ use Aditex\src\Container;
 use Routex\http\Response;
 
 
+/**
+ * to defined your routes for your application
+ * this class provides you two methods get and post
+ * use this method to defined authenticated urls
+ * for your application..except these url all routes 
+ * will throw you 404 error page..
+ */
 class Route
 {
-	
+
 	/**
 	* @var array
 	*/
 	public static $authGetRequests = [];
 
+
 	/**
 	* @var array
 	*/
 	public static $authPostRequests = [];
+
 
 	/**
 	 * set view directory path and extension 
@@ -33,6 +42,8 @@ class Route
 		define('VIEW_FILE_EXT', $extension);
 		$this->sendClientResponse();
 	}
+
+
 	/**
 	 * set get request urls and corressponding view for them
 	 * 
@@ -41,7 +52,9 @@ class Route
 	 */
 	public static function get(string $url, $view)
 	{
-		array_push(self::$authGetRequests, new get($url,$view));
+		$getObj = new get($url,$view);
+		array_push(self::$authGetRequests, $getObj);
+		return $getObj;
 	}
 
 
@@ -63,7 +76,9 @@ class Route
 	 */
 	public static function post(string $url, $view)
 	{
-		array_push(self::$authPostRequests, new post($url,$view));
+		$postObj = new post($url,$view);
+		array_push(self::$authPostRequests, $postObj);
+		return $postObj;
 	}
 
 	/**
@@ -91,6 +106,5 @@ class Route
 				->create(Response::class)->get()
 				->getResponse();
 	}
-
 
 }

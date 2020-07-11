@@ -77,6 +77,16 @@ class Response
 	 */
 	public function getResponse()
 	{
+		// execute middelware class method handler
+		// if middelware set..
+		if (isset($this->httpRequest->middelware)) {
+			$middelware = Container::call($this->httpRequest->middelware)
+							->exec('handler');
+			
+			if ($this->redirectInstance($middelware)) {
+				return $this->setLocHeader($middelware->cleanUrl);
+			}
+		}
 		
 		if (is_string($this->httpRequest->view)) {
 			
