@@ -2,7 +2,7 @@
 namespace Routex\method;
 
 use Routex\method\parserTrait;
-use \Route;
+use Routex\Route;
 
 
 class get
