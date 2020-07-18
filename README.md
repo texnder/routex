@@ -1,4 +1,5 @@
 # routex
+
 light and fast routing system for PHP framework
 
 ## Installation
@@ -6,6 +7,31 @@ install this library using composer.
 
 	syntax:
 		composer require texnder/routex
+
+v1.0.6
+========
+
+middelware functionality added to authenticate user while specific urls triggered.
+
+Authentication requires texnder 'sessnex' API to handle session veriables. so, to use 'Auth' middelware, routex needs texnder sessnex API (>=v0.06)
+
+	syntax:
+		Route::get('my-custom-url','controller@method')->middelware('Auth');
+
+
+v1.0.4
+========
+
+Redirect any url internaly using 'redirect' helper function. 
+remember** to redirect, it must important to return redirect function.
+	
+	syntax:
+		function foo(){
+			return redirect('/new-custom-url');
+		}
+
+v1.0.2
+========
 
 ## Routex Response
 To get client response data create [Routex\http\Response class] new instance and call its getResponse method. Routex\http\Response has a [Routex\http\Request class] dependency. so inject it by creating this instance or simply create [Routex\http\Response class] using aditex dependency injector. Routex is dependent on aditex, it means it will install automatically, when you install Routex using composer.
@@ -97,7 +123,14 @@ for Example:
 For more information please visit [.htaccess](https://httpd.apache.org/docs/2.4/howto/htaccess.html)
 
 ## any queries
+
 for any further queries, please email us on: (texnder.components@gmail.com)
+
+
+## Documentation
+
+documentation for all texnder APIs available [here](http://texnder.com/documentation/)
+
 
 ## License
 
